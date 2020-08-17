@@ -3,12 +3,35 @@ document.addEventListener(`DOMContentLoaded`, e => {
     const defaultStyle = document.querySelector("style")
     const customDiv = document.querySelector(`#custom`)
     const styleObject = {
-        borderStyle: ``,
-        borderColor: ``
-    }
-    const convertStyle = () => {
         
+            height: "300px",
+            width: "300px",
+            border: "1px solid black",
+            
+            position: "absolute",
+            top:"0",
+            bottom: "0",
+            left: "0",
+            right: "0",
+            
+            margin: "auto"
+        // borderStyle: ``,
+        // borderColor: ``
     }
+    
+
+    const convertStyle = (styleObject) => {
+        let styleString = ""
+        for(const key in styleObject) {
+            
+            styleString +=
+            ` 
+            ${key}: ${styleObject[key]};
+            `
+        }    
+        return defaultStyle.innerHTML = `#custom{${styleString}}`
+    }
+   
     const renderStyle = () => {
         
     }
@@ -23,13 +46,15 @@ document.addEventListener(`DOMContentLoaded`, e => {
             updateDefaultDivShape(e.target.value)
         }
 
+
     })
 
     document.addEventListener(`submit`, e => {
         e.preventDefault()
-        console.log(e.target.color.value)
-        if (e.target.matches(`#border-color`)) {
-            console.log(e.target.color.value, styleTag)
+        if (e.target.matches(`#border-color`)) {        
+            styleObject['border-color'] = e.target.color.value
+            convertStyle(styleObject)
+
         }
     })
     
