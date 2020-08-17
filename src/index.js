@@ -6,8 +6,8 @@ document.addEventListener(`DOMContentLoaded`, e => {
         
             height: "300px",
             width: "300px",
-            border: "1px solid black",
-            
+            "border-style": "solid",
+            "border-width": "30px",
             position: "absolute",
             top:"0",
             bottom: "0",
@@ -20,6 +20,39 @@ document.addEventListener(`DOMContentLoaded`, e => {
     }
     
 
+    document.addEventListener(`change`, e => {
+        if(e.target.matches("#border-style")){
+            styleObject['border-style'] = e.target.value
+            convertStyle(styleObject)
+        } else if(e.target.matches("#default-shape")){
+            updateDefaultDivShape(e.target.value)
+        }
+
+    })
+
+    document.addEventListener('click', e =>{
+        if(e.target.matches("#border-width-up")){
+            styleObject['border-width'] = `${parseInt(styleObject['border-width']) + 5}px`
+            convertStyle(styleObject)
+        }else if(e.target.matches("#border-width-down")){
+            if(parseInt(styleObject['border-width']) > 5 ){
+            styleObject['border-width'] = `${parseInt(styleObject['border-width']) - 5}px`
+            convertStyle(styleObject)
+            }else if(parseInt(styleObject['border-width']) <= 5){
+                alert("It's too small b")
+            }
+        }
+    })
+
+    document.addEventListener(`submit`, e => {
+        e.preventDefault()
+        if (e.target.matches(`#border-color`)) {        
+            styleObject['border-color'] = e.target.color.value
+            convertStyle(styleObject)
+
+        }
+    })
+
     const convertStyle = (styleObject) => {
         let styleString = ""
         for(const key in styleObject) {
@@ -31,32 +64,13 @@ document.addEventListener(`DOMContentLoaded`, e => {
         }    
         return defaultStyle.innerHTML = `#custom{${styleString}}`
     }
-   
+    convertStyle(styleObject)
     const renderStyle = () => {
         
     }
    
 
-    document.addEventListener(`change`, e => {
-        if(e.target.matches("#border")){
-
-        } else if(e.target.matches("#color")){
-            
-        } else if(e.target.matches("#default-shape")){
-            updateDefaultDivShape(e.target.value)
-        }
-
-
-    })
-
-    document.addEventListener(`submit`, e => {
-        e.preventDefault()
-        if (e.target.matches(`#border-color`)) {        
-            styleObject['border-color'] = e.target.color.value
-            convertStyle(styleObject)
-
-        }
-    })
+   
     
     
 
@@ -64,36 +78,29 @@ document.addEventListener(`DOMContentLoaded`, e => {
 
     function updateDefaultDivShape(defaultSelection){
         if(defaultSelection === "square"){
-            defaultStyle.innerHTML = 
-            `#custom {
-                height: 300px;
-                width: 300px;
-                border: 1px solid black;
-                
-                position: absolute;
-	            top:0;
-	            bottom: 0;
-	            left: 0;
-	            right: 0;
-                
-                margin: auto;
-            }`
+            styleObject['border-radius'] = '0%'
+            defaultStyle.innerHTML =  convertStyle(styleObject)
+            
         }else if(defaultSelection === "circle"){
-            defaultStyle.innerHTML = 
-            `#custom {
-                height: 300px;
-                width: 300px;
-                border-radius: 50%;
-                border: 1px solid black;
+            styleObject['height'] = '300px'
+            styleObject['width'] = '300px'
+            styleObject['border-radius'] =  '50%'
+            defaultStyle.innerHTML = convertStyle(styleObject)
+            // `#custom {
+            //     height: 300px;
+            //     width: 300px;
+            //     border-radius: 50%;
+            //     border: 20px solid black;
                 
-                position: absolute;
-	            top:0;
-	            bottom: 0;
-	            left: 0;
-	            right: 0;
+            //     position: absolute;
+	        //     top:0;
+	        //     bottom: 0;
+	        //     left: 0;
+	        //     right: 0;
                 
-                margin: auto;
-            }`           
+            //     margin: auto;
+            // }`           
+            
         // }else if(defaultSelection === "triangle"){
         //     defaultStyle.innerHTML = 
         //     `#custom {
@@ -113,20 +120,9 @@ document.addEventListener(`DOMContentLoaded`, e => {
         //     }`    
 
         }else if(defaultSelection === "rectangle"){
-            defaultStyle.innerHTML =
-            `#custom {
-                height: 150px;
-                width: 300px;
-                border: 1px solid black;
-                
-                position: absolute;
-	            top:0;
-	            bottom: 0;
-	            left: 0;
-	            right: 0;
-                
-                margin: auto;
-            }`  
+            styleObject['height'] = '150px'
+            styleObject['border-radius'] = '0%'
+            defaultStyle.innerHTML = convertStyle(styleObject)
 
         // }else if(defaultSelection === "trapezoid"){
         //     defaultStyle.innerHTML =
