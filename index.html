@@ -1,9 +1,33 @@
 <html>
     <head>
         <title>MyCSS</title>
-        <style></style>
+        <style>
+          /* Default Square */
+            #custom {
+                height: 300px;
+                width: 300px;
+                border: 1px solid black;
+                
+                position: absolute;
+	            top:0;
+	            bottom: 0;
+	            left: 0;
+	            right: 0;
+                
+                margin: auto;
+            }
+
+        </style>
     </head>
     <body>
+        <label for="default-shape">Choose border:</label>
+            <select id="default-shape" name="border">
+                <option value="square">Square</option>
+                <option value="circle">Circle</option>
+                <option value="triangle">Triangle</option>
+                <option value="rectangle">Rectangle</option>
+                <option value="trapezoid">Trapezoid</option>
+            </select>
         <label for="border">Choose border:</label>
             <select id="border" name="border">
                 <option value="solid">solid</option>
@@ -16,7 +40,7 @@
                 <option value="red">red</option>
                 <option value="blue">blue</option>
                 <option value="green">green</option>
-                <option value="orage">orange</option>
+                <option value="orange">orange</option>
             </select>      
             <input type="color">
         <div id="custom" class="custom"></div>
