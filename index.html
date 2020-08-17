@@ -29,22 +29,19 @@
                 <option value="rectangle">Rectangle</option>
                 <!-- <option value="trapezoid">Trapezoid</option> -->
             </select>
-        <label for="border">Choose border:</label>
-            <select id="border" name="border">
+            <label for="border">Border Style:</label>
+            <select id="border-style" name="border">
                 <option value="solid">solid</option>
                 <option value="double">double</option>
                 <option value="groove">groove</option>
                 <option value="ridge">ridge</option>
             </select>
-        <label for="border">Choose color:</label>
-            <select id="color" name="color">
-                <option value="red">red</option>
-                <option value="blue">blue</option>
-                <option value="green">green</option>
-                <option value="orange">orange</option>
-            </select>      
-            <input type="color">
-        <div id="custom" class="custom"></div>
+        <form id="border-color">
+            <label for="border">Border Color:</label>
+            <input type="color" name="color">
+            <button type="submit">Change Color</button>
+        </form>
+        <div id="custom" class="custom">Customize this div!</div>
         <script type="text/javascript" src="src/index.js"></script>
     </body>
 </html>

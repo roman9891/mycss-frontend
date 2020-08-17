@@ -1,21 +1,18 @@
 document.addEventListener(`DOMContentLoaded`, e => {
-  
-//     const obj = { ...defaultStyle}
-//      updatedDefualt = obj['border'].push(updateDefaultDivShape(defaultSelection))
-//      something = obj['border'].push(something else)
-
-//    // option 1 
-//    const updated.innerHTML = 
-
-//   `#custom
-//         ${obj}
-//     `
-   
-
-//     const customDiv = document.querySelector(`#custom`)
-
-
+    const styleTag = document.querySelector(`#style`)
     const defaultStyle = document.querySelector("style")
+    const customDiv = document.querySelector(`#custom`)
+    const styleObject = {
+        borderStyle: ``,
+        borderColor: ``
+    }
+    const convertStyle = () => {
+        
+    }
+    const renderStyle = () => {
+        
+    }
+   
 
     document.addEventListener(`change`, e => {
         if(e.target.matches("#border")){
@@ -26,6 +23,14 @@ document.addEventListener(`DOMContentLoaded`, e => {
             updateDefaultDivShape(e.target.value)
         }
 
+    })
+
+    document.addEventListener(`submit`, e => {
+        e.preventDefault()
+        console.log(e.target.color.value)
+        if (e.target.matches(`#border-color`)) {
+            console.log(e.target.color.value, styleTag)
+        }
     })
     
     
