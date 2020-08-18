@@ -2,6 +2,7 @@
     background-color: #333;
     position: fixed; 
     top: 0; 
+    left: 0;
     width: 100%;
 }
 
@@ -15,11 +16,19 @@
 }
 
 #style-container {
-    float: left;
-    max-width: 30%;
+    /* float: left;
+    max-width: 30%; */
+    position: fixed; 
+    top: 30%; 
+    left: 0;
+    width: 30%;
 }
 
 #post-form-div {
-    float: right;
-    max-width: 30%;
+    /* float: right;
+    max-width: 30%; */
+    position: fixed; 
+    top: 30%; 
+    left: 70%;
+    width: 30%;
 }
