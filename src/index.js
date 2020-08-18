@@ -9,7 +9,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             width: "300px",
             "border-style": "solid",
             "border-width": "30px",
-            "border-radius": "0px",
+            //"border-radius": "0px",
             position: "absolute",
             top:"0",
             bottom: "0",
@@ -46,12 +46,13 @@ document.addEventListener(`DOMContentLoaded`, e => {
             }
         }else if(e.target.matches("#border-radius-up")){
             console.log(e.target)
-            styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) + 5}px`
+            styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) + 5}%`
+            console.log(styleObject['border-radius'])
             convertStyle(styleObject)
         }else if(e.target.matches("#border-radius-down")){
             console.log(e.target)
             if (parseInt(styleObject['border-radius']) > 5 ){
-                styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) - 5}px`
+                styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) - 5}%`
                 convertStyle(styleObject)
             } else if (parseInt(styleObject['border-radius']) <= 5){
                 alert("It's too small b")
