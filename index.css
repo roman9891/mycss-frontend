@@ -1,9 +1,11 @@
 .nav {
     background-color: #333;
     position: fixed; 
+    border: 1px solid black;
     top: 0; 
     left: 0;
     width: 100%;
+    height: 20%;
 }
 
 .nav li {
@@ -13,22 +15,37 @@
     color: white;
     text-align: center;
     text-decoration: none;
+    border: 1px solid white
 }
 
 #style-container {
     /* float: left;
     max-width: 30%; */
     position: fixed; 
-    top: 30%; 
+    top: 20%; 
     left: 0;
-    width: 30%;
+    width: 20%;
+    border: 1px solid black;
+    padding: 10px
 }
 
 #post-form-div {
     /* float: right;
     max-width: 30%; */
     position: fixed; 
-    top: 30%; 
-    left: 70%;
-    width: 30%;
+    top: 20%; 
+    left: 80%;
+    width: 20%;
+    border: 1px solid black;
+    padding: 10px
+}
+
+textarea {
+    height: 200px;
+}
+
+#logo {
+    float: left;
+    margin: 20px;
+    border: 1px solid white
 }
