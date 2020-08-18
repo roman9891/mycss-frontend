@@ -5,26 +5,41 @@
         </style>
         <link rel="stylesheet" href="index.css">
     </head>
-    <body>  
-        <label for="border-width">Add or subtract border width:</label>
+    <body> 
+        <div id="style-container">
+            <div id="border-width-div">
+                <label for="border-width">Border Width:</label>
                 <button id="border-width-up">+</button>
                 <button id="border-width-down">-</button>
-            <label for="border">Border Style:</label>
-            <select id="border-style" name="border">
-                <option value="solid">solid</option>
-                <option value="double">double</option>
-                <option value="groove">groove</option>
-                <option value="ridge">ridge</option>
-            </select>
-        <label for="border-radius">Border Radius</label>
-            <button id="border-radius-up">+</button>
-            <button id="border-radius-down">-</button>
-        <form id="border-color">
-            <label for="border">Border Color:</label>
-            <input type="color" name="color">
-            <button type="submit">Change Color</button>
-        </form>
-        
+            </div>
+            <div id="border-radius-div">
+                <label for="border-radius">Border Radius</label>
+                <button id="border-radius-up">+</button>
+                <button id="border-radius-down">-</button>
+            </div>
+            <div id="border-style-div">
+                <label for="border">Border Style:</label>
+                <select id="border-style" name="border">
+                    <option value="solid">solid</option>
+                    <option value="double">double</option>
+                    <option value="groove">groove</option>
+                    <option value="ridge">ridge</option>
+                    <option value="dotted">dotted</option>
+                    <option value="dashed">dashed</option>
+                    <option value="inset">inset</option>
+                    <option value="outset">outset</option>
+                    <option value="hidden">hidden</option>
+                    <option value="none">none</option>
+                </select>
+            </div>
+            <div id="border-color-div">
+                <form id="border-color">
+                    <label for="border">Border Color:</label>
+                    <input type="color" name="color">
+                    <button type="submit">Change Color</button>
+                </form>
+            </div> 
+        </div>
         <div class="nav">
             <ul>
                 <li>Username</li>
@@ -41,14 +56,15 @@
                 </li>
             </ul>
           </div>
-       
         <div id="custom" class="custom">Customize this div!</div>
-        <div>
+        <div id="post-form-div">
             <form id="style-form">
                 <label>Style Name:</label>
                 <input type="text" name="name">
+                <br>
                 <label>CSS</label>
                 <textarea name="css"></textarea>
+                <br>
                 <button id="save-button" type="submit">save</button>
             </form>
         </div>
