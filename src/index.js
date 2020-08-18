@@ -9,6 +9,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             width: "300px",
             "border-style": "solid",
             "border-width": "30px",
+            "border-radius": "0px",
             position: "absolute",
             top:"0",
             bottom: "0",
@@ -32,14 +33,27 @@ document.addEventListener(`DOMContentLoaded`, e => {
     })
 
     document.addEventListener('click', e =>{
+        
         if(e.target.matches("#border-width-up")){
             styleObject['border-width'] = `${parseInt(styleObject['border-width']) + 5}px`
             convertStyle(styleObject)
         }else if(e.target.matches("#border-width-down")){
             if(parseInt(styleObject['border-width']) > 5 ){
-            styleObject['border-width'] = `${parseInt(styleObject['border-width']) - 5}px`
-            convertStyle(styleObject)
+                styleObject['border-width'] = `${parseInt(styleObject['border-width']) - 5}px`
+                convertStyle(styleObject)
             }else if(parseInt(styleObject['border-width']) <= 5){
+                alert("It's too small b")
+            }
+        }else if(e.target.matches("#border-radius-up")){
+            console.log(e.target)
+            styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) + 5}px`
+            convertStyle(styleObject)
+        }else if(e.target.matches("#border-radius-down")){
+            console.log(e.target)
+            if (parseInt(styleObject['border-radius']) > 5 ){
+                styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) - 5}px`
+                convertStyle(styleObject)
+            } else if (parseInt(styleObject['border-radius']) <= 5){
                 alert("It's too small b")
             }
         }
