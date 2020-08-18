@@ -79,8 +79,23 @@ document.addEventListener(`DOMContentLoaded`, e => {
             })
             .then(r => r.json())
             .then(data => console.log(data.properties))
+        } 
+        if (e.target.matches('#create-account')){
+            const CreateUserObj = {
+                username: e.target[0].value, 
+                password: e.target[1].value
+            }
+            fetch(`http://localhost:3000/users`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'accept': 'application/json'
+                },
+                body: JSON.stringify(CreateUserObj)
+            })
         }
     })
+
 
     const convertStyle = (styleObject) => {
         let styleString = `#custom{`
