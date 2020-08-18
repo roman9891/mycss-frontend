@@ -15,7 +15,6 @@ document.addEventListener(`DOMContentLoaded`, e => {
             bottom: "0",
             left: "0",
             right: "0",
-            
             margin: "auto"
     }
     
