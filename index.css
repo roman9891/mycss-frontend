@@ -1,0 +1,15 @@
+.nav {
+    background-color: #333;
+    position: fixed; 
+    top: 0; 
+    width: 100%;
+}
+
+.nav li {
+    float: right;
+    display: block;
+    padding: 14px 16px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
