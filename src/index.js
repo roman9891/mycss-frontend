@@ -48,7 +48,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             convertStyle(styleObject)
         }else if(e.target.matches("#border-radius-down")){
             console.log(e.target)
-            if (parseInt(styleObject['border-radius']) > 5 ){
+            if (parseInt(styleObject['border-radius']) >= 5 ){
                 styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) - 5}%`
                 convertStyle(styleObject)
             } else if (parseInt(styleObject['border-radius']) <= 5){

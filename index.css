@@ -1,0 +1,9 @@
+#style-container {
+    float: left;
+    max-width: 30%;
+}
+
+#post-form-div {
+    float: right;
+    max-width: 30%;
+}
