@@ -2,6 +2,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
     const styleTag = document.querySelector(`#style`)
     const defaultStyle = document.querySelector("style")
     const customDiv = document.querySelector(`#custom`)
+    const styleForm = document.querySelector(`#style-form`)
     const styleObject = {
         
             height: "300px",
@@ -49,25 +50,39 @@ document.addEventListener(`DOMContentLoaded`, e => {
         if (e.target.matches(`#border-color`)) {        
             styleObject['border-color'] = e.target.color.value
             convertStyle(styleObject)
-
+        }
+        if (e.target.matches(`#style-form`)) {
+            console.log(e.target.name.value, e.target.css.value)
+            const object = {
+                properties: e.target.css.value
+            }
+            fetch(`http://localhost:3000/styles`, {
+                method: `POST`,
+                headers: {
+                    "content-type": `application/json`,
+                    accept: `application/json`
+                },
+                body: JSON.stringify(object)
+            })
+            .then(r => r.json())
+            .then(data => console.log(data.properties))
         }
     })
 
     const convertStyle = (styleObject) => {
-        let styleString = ""
+        let styleString = `#custom{`
         for(const key in styleObject) {
             
             styleString +=
             ` 
             ${key}: ${styleObject[key]};
             `
-        }    
-        return defaultStyle.innerHTML = `#custom{${styleString}}`
+        } 
+        styleString += `}`
+        styleForm.css.innerText = styleString
+        return defaultStyle.innerHTML = styleString
     }
     convertStyle(styleObject)
-    const renderStyle = () => {
-        
-    }
    
 
    
