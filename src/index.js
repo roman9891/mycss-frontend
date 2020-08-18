@@ -15,18 +15,24 @@ document.addEventListener(`DOMContentLoaded`, e => {
             bottom: "0",
             left: "0",
             right: "0",
-            margin: "auto"
+            margin: "auto",
+            padding: "0"
     }
     
 
     document.addEventListener(`change`, e => {
-        if(e.target.matches("#border-style")){
+        if (e.target.matches("#border-style")){
             styleObject['border-style'] = e.target.value
             convertStyle(styleObject)
-        } else if(e.target.matches("#default-shape")){
-            updateDefaultDivShape(e.target.value)
         }
-
+        if (e.target.matches("#text-h-align")){
+            styleObject['text-align'] = e.target.value
+            convertStyle(styleObject)
+        }
+        if (e.target.matches("#text-v-align")){
+            styleObject['vertical-align'] = e.target.value
+            convertStyle(styleObject)
+        }
     })
 
     document.addEventListener('click', e =>{
@@ -42,9 +48,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 alert("It's too small b")
             }
         }else if(e.target.matches("#border-radius-up")){
-            console.log(e.target)
             styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) + 5}%`
-            console.log(styleObject['border-radius'])
             convertStyle(styleObject)
         }else if(e.target.matches("#border-radius-down")){
             console.log(e.target)
@@ -54,7 +58,46 @@ document.addEventListener(`DOMContentLoaded`, e => {
             } else if (parseInt(styleObject['border-radius']) <= 5){
                 alert("It's too small b")
             }
+        }else if(e.target.matches("#padding-width-up")){
+            styleObject['padding'] = `${parseInt(styleObject['padding']) + 1}px`
+            convertStyle(styleObject)
+        }else if(e.target.matches("#padding-width-down")){
+            if (parseInt(styleObject['padding']) > 0 ){
+                styleObject['padding'] = `${parseInt(styleObject['padding']) - 1}px`
+                convertStyle(styleObject)
+            }
+        }else if(e.target.matches("#height-up")){
+            styleObject['height'] = `${parseInt(styleObject['height']) + 1}px`
+            convertStyle(styleObject)
+        }else if(e.target.matches("#height-down")){
+            if (parseInt(styleObject['height']) > 0 ){
+                styleObject['height'] = `${parseInt(styleObject['height']) - 1}px`
+                convertStyle(styleObject)
+            }
+        }else if(e.target.matches("#width-up")){
+            styleObject['width'] = `${parseInt(styleObject['width']) + 1}px`
+            convertStyle(styleObject)
+        }else if(e.target.matches("#width-down")){
+            if (parseInt(styleObject['width']) > 0 ){
+                styleObject['width'] = `${parseInt(styleObject['width']) - 1}px`
+                convertStyle(styleObject)
+            }
         }
+        //     else if(e.target.matches("#margin-width-up")){
+        //     if (styleObject['margin'] === `auto`) {
+        //         styleObject['margin'] = `30px`
+        //         styleObject['margin'] = `${parseInt(styleObject['margin']) + 1}px`
+        //         convertStyle(styleObject)
+        //     } else {
+        //         styleObject['margin'] = `${parseInt(styleObject['margin']) + 1}px`
+        //         convertStyle(styleObject)
+        //     }
+        // }else if(e.target.matches("#margin-width-down")){
+        //     if (parseInt(styleObject['margin']) > 0 ){
+        //         styleObject['margin'] = `${parseInt(styleObject['margin']) - 1}px`
+        //         convertStyle(styleObject)
+        //     }
+        // }
     })
 
     document.addEventListener(`submit`, e => {
@@ -63,6 +106,17 @@ document.addEventListener(`DOMContentLoaded`, e => {
             styleObject['border-color'] = e.target.color.value
             convertStyle(styleObject)
         }
+
+        if (e.target.matches(`#background-color`)) {        
+            styleObject['background-color'] = e.target.color.value
+            convertStyle(styleObject)
+        }
+
+        if (e.target.matches(`#color`)) {        
+            styleObject['color'] = e.target.color.value
+            convertStyle(styleObject)
+        }
+
         if (e.target.matches(`#style-form`)) {
             console.log(e.target.name.value, e.target.css.value)
             const object = {
