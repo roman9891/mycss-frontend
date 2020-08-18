@@ -9,7 +9,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             width: "300px",
             "border-style": "solid",
             "border-width": "30px",
-            //"border-radius": "0px",
+            "border-radius": "0px",
             position: "absolute",
             top:"0",
             bottom: "0",
@@ -17,8 +17,6 @@ document.addEventListener(`DOMContentLoaded`, e => {
             right: "0",
             
             margin: "auto"
-        // borderStyle: ``,
-        // borderColor: ``
     }
     
 
@@ -98,80 +96,4 @@ document.addEventListener(`DOMContentLoaded`, e => {
         return defaultStyle.innerHTML = styleString
     }
     convertStyle(styleObject)
-   
-
-   
-    
-    
-
-
-
-    function updateDefaultDivShape(defaultSelection){
-        if(defaultSelection === "square"){
-            styleObject['border-radius'] = '0%'
-            defaultStyle.innerHTML =  convertStyle(styleObject)
-            
-        }else if(defaultSelection === "circle"){
-            styleObject['height'] = '300px'
-            styleObject['width'] = '300px'
-            styleObject['border-radius'] =  '50%'
-            defaultStyle.innerHTML = convertStyle(styleObject)
-            // `#custom {
-            //     height: 300px;
-            //     width: 300px;
-            //     border-radius: 50%;
-            //     border: 20px solid black;
-                
-            //     position: absolute;
-	        //     top:0;
-	        //     bottom: 0;
-	        //     left: 0;
-	        //     right: 0;
-                
-            //     margin: auto;
-            // }`           
-            
-        // }else if(defaultSelection === "triangle"){
-        //     defaultStyle.innerHTML = 
-        //     `#custom {
-        //         width: 0;
-        //         height: 0;
-        //         border-left: 250px solid transparent;
-        //         border-right: 250px solid transparent;
-        //         border-bottom: 250px solid  black;
-                
-        //         position: absolute;
-	    //         top:0;
-	    //         bottom: 0;
-	    //         left: 0;
-	    //         right: 0;
-                
-        //         margin: auto;
-        //     }`    
-
-        }else if(defaultSelection === "rectangle"){
-            styleObject['height'] = '150px'
-            styleObject['border-radius'] = '0%'
-            defaultStyle.innerHTML = convertStyle(styleObject)
-
-        // }else if(defaultSelection === "trapezoid"){
-        //     defaultStyle.innerHTML =
-        //     `#custom {
-        //         height: 0px;
-        //         border-bottom: 200px solid black;
-	    //         border-left: 300px solid transparent;
-	    //         border-right: 300px solid transparent;
-        //         width: 150px;
-                
-        //         position: absolute;
-	    //         top:0;
-	    //         bottom: 0;
-	    //         left: 0;
-	    //         right: 0;
-                
-        //         margin: auto;
-        //     }` 
-
-        }
-    }
 });
