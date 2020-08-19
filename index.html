@@ -107,7 +107,10 @@
             <div id="logo">Logo Here</div>
             <div id="saved-style-container"></div>
             <div id="login">
-                <form id="create-account">
+                <button id="log-in">Login</button>
+                <button id="sign-up">Sign Up</button>
+            <div id="created-user"></div>
+                <form id="create-account" hidden>
                     <label for="uname">Username:</label>
                     <input type="text" placeholder="Create a username" name="uname" required>
                     <br>
@@ -116,6 +119,17 @@
                     <br>
                     <button id="create account" type="submit">Create Account</button>
                 </form>
+            <div id="login-form" hidden>
+                <form id="login-account">
+                    <label for="uname">Username:</label>
+                    <input type="text" placeholder="Create a username" name="uname" required>
+                    <br>
+                    <label for="pass">Password:</label>
+                    <input type="password" placeholder="Create a password" name="pass" required>
+                    <br>
+                    <button id="login-btn" type="submit">Login</button>
+                </form>
+            </div>
             </div>
             <!-- <ul>
                 <li id="create-username-li"> 

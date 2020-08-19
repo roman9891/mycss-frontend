@@ -19,7 +19,6 @@ document.addEventListener(`DOMContentLoaded`, e => {
             margin: "auto",
             padding: "0"
     }
-    
 
     document.addEventListener(`change`, e => {
         if (e.target.matches("#border-style")){
@@ -83,6 +82,29 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 styleObject['width'] = `${parseInt(styleObject['width']) - 1}px`
                 convertStyle(styleObject)
             }
+        }else if(e.target.matches("#logoutBtn")){
+            localStorage.clear()
+            const createUserForm = document.querySelector("#create-account")
+            createUserForm.style.display = "none"
+            const createdUserName = document.querySelector('#created-user')
+            createdUserName.style.display = "none"
+            loginSignupOn()
+
+        }else if(e.target.matches("#log-in")){
+            const loginForm = document.querySelector("#login-form")
+            loginForm.style.display = "block"
+            const loginBtn = document.querySelector("#log-in")
+            loginBtn.style.display = "none"
+            const signUpbtn = document.querySelector("#sign-up")
+            signUpbtn.style.display = "none"
+        
+        }else if(e.target.matches("#sign-up")){
+            const createUserForm = document.querySelector("#create-account")
+            createUserForm.style.display = "block"
+            const loginBtn = document.querySelector("#log-in")
+            loginBtn.style.display = "none"
+            const signUpbtn = document.querySelector("#sign-up")
+            signUpbtn.style.display = "none"
         }
         //     else if(e.target.matches("#margin-width-up")){
         //     if (styleObject['margin'] === `auto`) {
@@ -160,16 +182,19 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 if(response.username === CreateUserObj.username){
                     const successModal = document.querySelector('#successModal')
                     const successModalContent = document.querySelector('#successModal p')
-                    const createUserNameLi = document.querySelector('#create-username-li')
-                    const logOutBtn = document.createElement("button")
-                    const logoutLi = document.createElement("li")
-                    const navUl = document.querySelector("body > div.nav > ul")
-                    logoutLi.innerHTML = `<button id="logoutBtn">Logout</button>`
+                    const createdUserName = document.querySelector('#created-user')
+                    const logoutDiv = document.createElement("div")
+                    const createUserForm = document.querySelector("#create-account")
+                    logoutDiv.setAttribute('id', 'logout')
+                    const logoutBtn = logoutDiv.innerHTML = `<button id="logoutBtn">Logout</button>`
                     id = response.id
                     successModalContent.textContent = `Congrats! the account for ${response.username}, has been created successfully`
                     successModal.style.display = "block"
-                    createUserNameLi.innerText = `Welcome ${response.username}`
-                    navUl.insertAdjacentElement('beforeend', logoutLi)
+                    createUserForm.style.display = "none"
+                    createdUserName.innerText = `Welcome ${response.username}`
+                    createdUserName.insertAdjacentHTML('afterbegin',logoutBtn)
+
+                    localStorage['username'] = `${response.username}`
                     
                     successModal.addEventListener("click", e => {
                         if(e.target.matches(".close")){
@@ -180,8 +205,44 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 }
             })
         }
+        if(e.target.matches("#login-account")){
+            login(e.target[0].value)
+        }
     })
+    
+    function checkLogin(){
+        if(localStorage['username']){
+            const createUserForm = document.querySelector("#create-account")
+            const createdUserName = document.querySelector('#created-user')
+            const loginBtn = document.querySelector("#log-in")
+            const signUpbtn = document.querySelector("#sign-up") 
+            const logoutDiv = document.createElement("div")
+            const loginForm = document.querySelector("#login-form")
+            logoutDiv.setAttribute('id', 'logout')
+            const logoutBtn = logoutDiv.innerHTML = `<button id="logoutBtn">Logout</button>`
+            createUserForm.style.display = "none"
+            createdUserName.innerText = `Hi ${localStorage['username']}!`
+            createdUserName.insertAdjacentHTML('afterbegin',logoutBtn)
+            loginBtn.style.display = "none"
+            signUpbtn.style.display = "none"
+            loginForm.style.display = "none"
+            
+        }
 
+    }
+
+    function login(username){
+        fetch(`http://localhost:3000/users/username/${username}`)
+        .then(res => res.json())
+        .then(username => {
+            localStorage['username'] = username.username
+            checkLogin()
+            //Styles()
+        })
+        
+    }
+    
+    
 
     const convertStyle = (styleObject) => {
         let bracketString = `{`
@@ -197,5 +258,22 @@ document.addEventListener(`DOMContentLoaded`, e => {
         console.log(bracketString)
         return defaultStyle.innerHTML = `#custom${bracketString}`
     }
+    
+    function loginSignupOn(){
+        const loginBtn = document.querySelector("#log-in")
+            loginBtn.style.display = "block"
+        const signUpbtn = document.querySelector("#sign-up")
+            signUpbtn.style.display = "block"
+    }
+
+    function loginSignupoff(){
+        const loginBtn = document.querySelector("#log-in")
+            loginBtn.style.display = "none"
+        const signUpbtn = document.querySelector("#sign-up")
+            signUpbtn.style.display = "none"
+    }
+
     convertStyle(styleObject)
+    checkLogin()
+    
 });

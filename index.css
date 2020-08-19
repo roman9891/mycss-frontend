@@ -123,7 +123,8 @@ textarea {
     height: 100%;
     width: 20%;
     border: 1px solid white;
-    margin: auto
+    margin: auto;
+    color: white;
 }
 
 form {
