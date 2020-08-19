@@ -4,6 +4,16 @@ document.addEventListener(`DOMContentLoaded`, e => {
     const defaultStyle = document.querySelector("style")
     const customDiv = document.querySelector(`#custom`)
     const styleForm = document.querySelector(`#style-form`)
+    const renderStyle = styleData => {
+        const savedStyleContainer = document.querySelector(`#saved-style-container`)
+        const savedStyleDiv = document.createElement(`span`)
+        savedStyleDiv.classList.add(`saved-style-div`)
+        savedStyleDiv.dataset.id = styleData.id
+        savedStyleDiv.dataset.name = styleData.name
+        savedStyleDiv.dataset.properties = styleData.properties
+        savedStyleDiv.innerText = styleData.name
+        savedStyleContainer.append(savedStyleDiv)
+    }
     const styleObject = {
         
             height: "300px",
@@ -12,11 +22,11 @@ document.addEventListener(`DOMContentLoaded`, e => {
             "border-width": "30px",
             "border-radius": "0px",
             position: "absolute",
-            top:"0",
-            bottom: "0",
-            left: "0",
-            right: "0",
-            margin: "auto",
+            // top:"0",
+            // bottom: "0",
+            // left: "0",
+            // right: "0",
+            margin: "0",
             padding: "0"
     }
     
@@ -30,14 +40,27 @@ document.addEventListener(`DOMContentLoaded`, e => {
             styleObject['text-align'] = e.target.value
             convertStyle(styleObject)
         }
-        if (e.target.matches("#text-v-align")){
-            styleObject['vertical-align'] = e.target.value
+        // if (e.target.matches("#text-v-align")){
+        //     styleObject['vertical-align'] = e.target.value
+        //     convertStyle(styleObject)
+        // }
+        if (e.target.matches("#position")){
+            styleObject['position'] = e.target.value
             convertStyle(styleObject)
         }
     })
 
     document.addEventListener('click', e =>{
-        
+        if(e.target.matches("#addDiv-up")){
+            const newCustomDiv = document.createElement(`div`)
+            const customDivContainer = document.querySelector(`#custom-container`)
+            newCustomDiv.classList.add(`custom`)
+            customDivContainer.append(newCustomDiv)
+            console.log(customDivContainer)
+        }
+        if(e.target.matches("#addDiv-down")){
+
+        }
         if(e.target.matches("#border-width-up")){
             styleObject['border-width'] = `${parseInt(styleObject['border-width']) + 5}px`
             convertStyle(styleObject)
@@ -60,45 +83,54 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 alert("It's too small b")
             }
         }else if(e.target.matches("#padding-width-up")){
-            styleObject['padding'] = `${parseInt(styleObject['padding']) + 1}px`
+            styleObject['padding'] = `${parseInt(styleObject['padding']) + 5}px`
             convertStyle(styleObject)
         }else if(e.target.matches("#padding-width-down")){
             if (parseInt(styleObject['padding']) > 0 ){
-                styleObject['padding'] = `${parseInt(styleObject['padding']) - 1}px`
+                styleObject['padding'] = `${parseInt(styleObject['padding']) - 5}px`
                 convertStyle(styleObject)
             }
         }else if(e.target.matches("#height-up")){
-            styleObject['height'] = `${parseInt(styleObject['height']) + 1}px`
+            styleObject['height'] = `${parseInt(styleObject['height']) + 5}px`
             convertStyle(styleObject)
         }else if(e.target.matches("#height-down")){
             if (parseInt(styleObject['height']) > 0 ){
-                styleObject['height'] = `${parseInt(styleObject['height']) - 1}px`
+                styleObject['height'] = `${parseInt(styleObject['height']) - 5}px`
                 convertStyle(styleObject)
             }
         }else if(e.target.matches("#width-up")){
-            styleObject['width'] = `${parseInt(styleObject['width']) + 1}px`
+            styleObject['width'] = `${parseInt(styleObject['width']) + 5}px`
             convertStyle(styleObject)
         }else if(e.target.matches("#width-down")){
             if (parseInt(styleObject['width']) > 0 ){
-                styleObject['width'] = `${parseInt(styleObject['width']) - 1}px`
+                styleObject['width'] = `${parseInt(styleObject['width']) - 5}px`
+                convertStyle(styleObject)
+            }
+        }else if(e.target.matches("#top-up")){
+            styleObject['top'] = `${parseInt(styleObject['top']) + 1}px`
+            convertStyle(styleObject)
+        }else if(e.target.matches("#top-down")){
+            if (parseInt(styleObject['top']) > 0 ){
+                styleObject['top'] = `${parseInt(styleObject['top']) - 1}px`
+                convertStyle(styleObject)
+            }
+        }else if(e.target.matches("#left-up")){
+            styleObject['left'] = `${parseInt(styleObject['left']) + 1}px`
+            convertStyle(styleObject)
+        }else if(e.target.matches("#left-down")){
+            if (parseInt(styleObject['left']) > 0 ){
+                styleObject['left'] = `${parseInt(styleObject['left']) - 1}px`
+                convertStyle(styleObject)
+            }
+        }else if(e.target.matches("#margin-width-up")){
+                styleObject['margin'] = `${parseInt(styleObject['margin']) + 1}px`
+                convertStyle(styleObject)
+            } else if(e.target.matches("#margin-width-down")){
+                if (parseInt(styleObject['margin']) > 0 ){
+                styleObject['margin'] = `${parseInt(styleObject['margin']) - 1}px`
                 convertStyle(styleObject)
             }
         }
-        //     else if(e.target.matches("#margin-width-up")){
-        //     if (styleObject['margin'] === `auto`) {
-        //         styleObject['margin'] = `30px`
-        //         styleObject['margin'] = `${parseInt(styleObject['margin']) + 1}px`
-        //         convertStyle(styleObject)
-        //     } else {
-        //         styleObject['margin'] = `${parseInt(styleObject['margin']) + 1}px`
-        //         convertStyle(styleObject)
-        //     }
-        // }else if(e.target.matches("#margin-width-down")){
-        //     if (parseInt(styleObject['margin']) > 0 ){
-        //         styleObject['margin'] = `${parseInt(styleObject['margin']) - 1}px`
-        //         convertStyle(styleObject)
-        //     }
-        // }
     })
 
     document.addEventListener(`submit`, e => {
@@ -133,14 +165,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 body: JSON.stringify(object)
             })
             .then(r => r.json())
-            .then(styleData => {
-                const savedStyleContainer = document.querySelector(`#saved-style-container`)
-                const savedStyleDiv = document.createElement(`div`)
-                savedStyleDiv.classList.add(`saved-style-div`)
-                savedStyleDiv.innerText = styleData.name
-                savedStyleContainer.append(savedStyleDiv)
-                console.log(styleData.name)
-            })
+            .then(styleData => renderStyle(styleData))
         } 
         if (e.target.matches('#create-account')){
             const CreateUserObj = {
@@ -195,7 +220,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
         bracketString += `}`
         styleForm.css.innerText = bracketString
         console.log(bracketString)
-        return defaultStyle.innerHTML = `#custom${bracketString}`
+        return defaultStyle.innerHTML = `.custom${bracketString}`
     }
     convertStyle(styleObject)
 });

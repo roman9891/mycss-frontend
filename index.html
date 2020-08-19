@@ -7,6 +7,12 @@
     </head>
     <body> 
         <div id="style-container">
+            <div id="addDiv-div">
+                <label for="addDiv">Add Div:</label>
+                <br>
+                <button class="style-button" id="addDiv-up">+</button>
+                <button class="style-button" id="addDiv-down">-</button>
+            </div>
             <div id="border-width-div">
                 <label for="border-width">Border Width:</label>
                 <br>
@@ -37,13 +43,24 @@
                 <button class="style-button" id="width-up">+</button>
                 <button class="style-button" id="width-down">-</button>
             </div>
-            <!-- overwriting auto moves the div to the corner of the screen
-                <div id="margin-container">
+            <div id="top-container">
+                <label>Top:</label>
+                <br>
+                <button class="style-button" id="top-up">+</button>
+                <button class="style-button" id="top-down">-</button>
+            </div>
+            <div id="left-container">
+                <label>Left:</label>
+                <br>
+                <button class="style-button" id="left-up">+</button>
+                <button class="style-button" id="left-down">-</button>
+            </div>
+            <div id="margin-container">
                 <label>Margin:</label>
                 <br>
                 <button class="style-button" id="margin-width-up">+</button>
                 <button class="style-button" id="margin-width-down">-</button>
-            </div> -->
+            </div>
             <div id="border-style-div">
                 <label for="border">Border Style:</label>
                 <br>
@@ -58,6 +75,16 @@
                     <option value="outset">outset</option>
                     <option value="hidden">hidden</option>
                     <option value="none">none</option>
+                </select>
+            </div>
+            <div id="postion-container">
+                <label for="position">Position</label>
+                <select id="position" name="position">
+                    <option value="static">static</option>
+                    <option value="relative">relative</option>
+                    <option value="fixed">fixed</option>
+                    <option value="absolute">absolute</option>
+                    <option value="sticky">sticky</option>
                 </select>
             </div>
             <div id="border-color-div">
@@ -107,7 +134,8 @@
             <div id="logo">Logo Here</div>
             <div id="saved-style-container"></div>
             <div id="login">
-                <form id="create-account">
+                login
+                <!-- <form id="create-account">
                     <label for="uname">Username:</label>
                     <input type="text" placeholder="Create a username" name="uname" required>
                     <br>
@@ -115,7 +143,7 @@
                     <input type="password" placeholder="Create a password" name="pass" required>
                     <br>
                     <button id="create account" type="submit">Create Account</button>
-                </form>
+                </form> -->
             </div>
             <!-- <ul>
                 <li id="create-username-li"> 
