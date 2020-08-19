@@ -9,16 +9,44 @@
         <div id="style-container">
             <div id="border-width-div">
                 <label for="border-width">Border Width:</label>
-                <button id="border-width-up">+</button>
-                <button id="border-width-down">-</button>
+                <br>
+                <button class="style-button" id="border-width-up">+</button>
+                <button class="style-button" id="border-width-down">-</button>
             </div>
             <div id="border-radius-div">
-                <label for="border-radius">Border Radius</label>
-                <button id="border-radius-up">+</button>
-                <button id="border-radius-down">-</button>
+                <label for="border-radius">Border Radius:</label>
+                <br>
+                <button class="style-button" id="border-radius-up">+</button>
+                <button class="style-button" id="border-radius-down">-</button>
             </div>
+            <div id="padding-container">
+                <label>Padding:</label>
+                <br>
+                <button class="style-button" id="padding-width-up">+</button>
+                <button class="style-button" id="padding-width-down">-</button>
+            </div>
+            <div id="height-container">
+                <label>Height:</label>
+                <br>
+                <button class="style-button" id="height-up">+</button>
+                <button class="style-button" id="height-down">-</button>
+            </div>
+            <div id="width-container">
+                <label>Width:</label>
+                <br>
+                <button class="style-button" id="width-up">+</button>
+                <button class="style-button" id="width-down">-</button>
+            </div>
+            <!-- overwriting auto moves the div to the corner of the screen
+                <div id="margin-container">
+                <label>Margin:</label>
+                <br>
+                <button class="style-button" id="margin-width-up">+</button>
+                <button class="style-button" id="margin-width-down">-</button>
+            </div> -->
             <div id="border-style-div">
                 <label for="border">Border Style:</label>
+                <br>
                 <select id="border-style" name="border">
                     <option value="solid">solid</option>
                     <option value="double">double</option>
@@ -35,6 +63,7 @@
             <div id="border-color-div">
                 <form id="border-color">
                     <label for="border">Border Color:</label>
+                    <br>
                     <input type="color" name="color">
                     <button type="submit">Change</button>
                 </form>
@@ -42,9 +71,28 @@
             <div id="background-color-div">
                 <form id="background-color">
                     <label for="background-color">Background Color:</label>
+                    <br>
                     <input type="color" name="color">
                     <button type="submit">Change</button>
                 </form>
+            </div>
+            <div id="color-div">
+                <form id="color">
+                    <label for="color">Text Color:</label>
+                    <br>
+                    <input type="color" name="color">
+                    <button type="submit">Change</button>
+                </form>
+            </div>
+            <div id="text-align-div">
+                <label>Text H-Alignment:</label>
+                <br>
+                <select id="text-h-align" name="align">
+                    <option value="left">left</option>
+                    <option value="right">right</option>
+                    <option value="center">center</option>
+                    <option value="justify">justify</option>
+                </select>
             </div>
         </div>
 
@@ -71,7 +119,7 @@
                 </li>
             </ul>
         </div>
-        <div id="custom" class="custom">Customize this div!</div>
+        <div id="custom" class="custom">Play with the CSS settings on the left to adjust the style of this element. You can save your favorite styles or copy the text on the right to recreate it in your own file. Have fun!</div>
         <div id="post-form-div">
             <form id="style-form">
                 <label>Style Name:</label>
