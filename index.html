@@ -40,16 +40,23 @@
                 </form>
             </div> 
         </div>
+
+        <div id="successModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p></p>
+              </div>
+        </div>
+
         <div class="nav">
             <ul>
-                <li>Username</li>
-                <li> 
+                <li id="create-username-li"> 
                     <form id="create-account">
                         <label for="uname">Username:</label>
                         <input type="text" placeholder="Create a username" name="uname" required>
                         <br>
                         <label for="pass">Password:</label>
-                        <input type="text" placeholder="Create a password" name="pass" required>
+                        <input type="password" placeholder="Create a password" name="pass" required>
                         <br>
                         <button id="create account" type="submit">Create Account</button>
                     </form>

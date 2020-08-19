@@ -84,13 +84,37 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 username: e.target[0].value, 
                 password: e.target[1].value
             }
-            fetch(`http://localhost:3000/users`, {
+            fetch('http://localhost:3000/users', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
                     'accept': 'application/json'
                 },
                 body: JSON.stringify(CreateUserObj)
+            })
+            .then(response => response.json())
+            .then(response => {
+                if(response.username === CreateUserObj.username){
+                    const successModal = document.querySelector('#successModal')
+                    const successModalContent = document.querySelector('#successModal p')
+                    const createUserNameLi = document.querySelector('#create-username-li')
+                    const logOutBtn = document.createElement("button")
+                    const logoutLi = document.createElement("li")
+                    const navUl = document.querySelector("body > div.nav > ul")
+                    logoutLi.innerHTML = `<button id="logoutBtn">Logout</button>`
+
+                    successModalContent.textContent = `Congrats! the account for ${response.username}, has been created successfully`
+                    successModal.style.display = "block"
+                    createUserNameLi.innerText = `Welcome ${response.username}`
+                    navUl.insertAdjacentElement('beforeend', logoutLi)
+
+                    successModal.addEventListener("click", e => {
+                        if(e.target.matches(".close")){
+                            successModal.style.display = "none"
+                            
+                        }
+                    })
+                }
             })
         }
     })
