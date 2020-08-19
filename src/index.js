@@ -1,4 +1,5 @@
 document.addEventListener(`DOMContentLoaded`, e => {
+    let id = 0
     const styleTag = document.querySelector(`#style`)
     const defaultStyle = document.querySelector("style")
     const customDiv = document.querySelector(`#custom`)
@@ -120,6 +121,8 @@ document.addEventListener(`DOMContentLoaded`, e => {
         if (e.target.matches(`#style-form`)) {
             console.log(e.target.name.value, e.target.css.value)
             const object = {
+                user_id: id,
+                name: e.target.name.value,
                 properties: e.target.css.value
             }
             fetch(`http://localhost:3000/styles`, {
@@ -156,12 +159,12 @@ document.addEventListener(`DOMContentLoaded`, e => {
                     const logoutLi = document.createElement("li")
                     const navUl = document.querySelector("body > div.nav > ul")
                     logoutLi.innerHTML = `<button id="logoutBtn">Logout</button>`
-
+                    id = response.id
                     successModalContent.textContent = `Congrats! the account for ${response.username}, has been created successfully`
                     successModal.style.display = "block"
                     createUserNameLi.innerText = `Welcome ${response.username}`
                     navUl.insertAdjacentElement('beforeend', logoutLi)
-
+                    
                     successModal.addEventListener("click", e => {
                         if(e.target.matches(".close")){
                             successModal.style.display = "none"
@@ -175,17 +178,18 @@ document.addEventListener(`DOMContentLoaded`, e => {
 
 
     const convertStyle = (styleObject) => {
-        let styleString = `#custom{`
+        let bracketString = `{`
         for(const key in styleObject) {
             
-            styleString +=
+            bracketString +=
             ` 
             ${key}: ${styleObject[key]};
             `
         } 
-        styleString += `}`
-        styleForm.css.innerText = styleString
-        return defaultStyle.innerHTML = styleString
+        bracketString += `}`
+        styleForm.css.innerText = bracketString
+        console.log(bracketString)
+        return defaultStyle.innerHTML = `#custom${bracketString}`
     }
     convertStyle(styleObject)
 });
