@@ -5,17 +5,20 @@
     top: 0; 
     left: 0;
     width: 100%;
-    height: 15%;
+    height: 10%;
+    padding: 10px;
 }
 
-.nav li {
+/* .nav li {
     float: right;
     display: block;
     color: white;
     text-align: center;
     text-decoration: none;
-    border: 1px solid white
-}
+    border: 1px solid white;
+    width: 10%;
+    height: 100%;
+} */
 
 
 .modal {
@@ -77,8 +80,10 @@ textarea {
 
 #logo {
     float: left;
-    margin: 20px;
-    border: 1px solid white
+    height: 100%;
+    width: 10%;
+    border: 1px solid white;
+    margin: auto;
 }
 
 .style-button {
@@ -91,4 +96,36 @@ textarea {
 
 #background-color-div {
     border: 1px solid black
+}
+
+#saved-style-container {
+    float: left;
+    border: 1px solid white;
+    height: 100%;
+    width: 65%;
+    padding: 10px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+}
+
+.saved-style-div {
+    display: inline-block;
+    border: 1px solid white;
+    /* scroll-margin-block: 10px; */
+    height: 80%;
+    width: 10%;
+}
+
+#login {
+    float: right;
+    height: 100%;
+    width: 20%;
+    border: 1px solid white;
+    margin: auto
+}
+
+form {
+    margin: 0px;
 }

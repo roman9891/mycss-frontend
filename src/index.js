@@ -119,7 +119,6 @@ document.addEventListener(`DOMContentLoaded`, e => {
         }
 
         if (e.target.matches(`#style-form`)) {
-            console.log(e.target.name.value, e.target.css.value)
             const object = {
                 user_id: id,
                 name: e.target.name.value,
@@ -134,7 +133,14 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 body: JSON.stringify(object)
             })
             .then(r => r.json())
-            .then(data => console.log(data.properties))
+            .then(styleData => {
+                const savedStyleContainer = document.querySelector(`#saved-style-container`)
+                const savedStyleDiv = document.createElement(`div`)
+                savedStyleDiv.classList.add(`saved-style-div`)
+                savedStyleDiv.innerText = styleData.name
+                savedStyleContainer.append(savedStyleDiv)
+                console.log(styleData.name)
+            })
         } 
         if (e.target.matches('#create-account')){
             const CreateUserObj = {
