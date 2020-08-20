@@ -27,7 +27,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             height: "300px",
             width: "300px",
             "border-style": "solid",
-            "border-width": "30px",
+            "border-width": "1px",
             "border-radius": "0px",
             position: "absolute",
             // top:"0",
@@ -165,10 +165,52 @@ document.addEventListener(`DOMContentLoaded`, e => {
         }else if(e.target.matches("#saved-style-container > span")){
             defaultStyle.innerHTML = `.custom${e.target.dataset.properties}`
         }
+        if (e.target.matches('#edit-button')){
+            const form = document.querySelector(`#style-form`)
+            const name = form.name.value
+            const css = form.css.value
+            const id = 4//document.querySelector(`#custom`).dataset.id
+            const style = {
+                id: id,
+                name: name,
+                properties: css
+            }
+            console.log(id)
+            
+            fetch(`http://localhost:3000/styles/${id}`, {
+                method: `PATCH`,
+                headers: {
+                    "content-type": `application/json`,
+                    accept: `application/json`
+                },
+                body: JSON.stringify(style)
+            })
+            .then(r => r.json())
+            .then(data => {
+                console.log(data)
+                //remove styles
+                //re render styles
+            })
+        }
+
+        if (e.target.matches('#delete-button')){
+            const id = 3//document.querySelector(`#custom`).dataset.id
+
+            fetch(`http://localhost:3000/styles/${id}`, {
+                method: `DELETE`,
+                headers: {"content-type": `application/json`}
+            })
+            .then(r => console.log(r))
+            .then(data => {
+                //rerender
+            })
+            console.log(``)
+        }
     })
 
     document.addEventListener(`submit`, e => {
         e.preventDefault()
+        console.log(e.target)
         if (e.target.matches(`#border-color`)) {        
             styleObject['border-color'] = e.target.color.value
             convertStyle(styleObject)
@@ -185,6 +227,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
         }
 
         if (e.target.matches(`#style-form`)) {
+            console.log(``)
             const object = {
                 user_id: id,
                 name: e.target.name.value,
@@ -199,8 +242,9 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 body: JSON.stringify(object)
             })
             .then(r => r.json())
-            .then(styleData => renderStyle(styleData))
+            .then(styleData => {renderStyle(styleData);console.log(styleData)})
         } 
+
         if (e.target.matches('#create-account')){
             const CreateUserObj = {
                 username: e.target[0].value, 
@@ -274,13 +318,18 @@ document.addEventListener(`DOMContentLoaded`, e => {
             .then(user => {
                 localStorage['username'] = user.user.username
                 localStorage['user_id'] = user.user.id
-                const savedStyleContainer = document.querySelector("#saved-style-container")
-                savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
-                user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
+                console.log(user)
+                renderUserStyles(user)
             })
             
         }
 
+    }
+
+    const renderUserStyles = user => {
+        const savedStyleContainer = document.querySelector("#saved-style-container")
+        savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
+        user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
     }
 
     function login(username){
