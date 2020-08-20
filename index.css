@@ -118,7 +118,7 @@ textarea {
 }
 
 .saved-style-div {
-    display: inline-block;
+    /* display: inline-block; */
     border: 1px solid white;
     /* scroll-margin-block: 10px; */
     height: 80%;

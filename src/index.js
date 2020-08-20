@@ -1,5 +1,6 @@
 document.addEventListener(`DOMContentLoaded`, e => {
-    let id = 0
+    let id = 1
+
     const styleTag = document.querySelector(`#style`)
     const defaultStyle = document.querySelector("style")
     const customDiv = document.querySelector(`#custom`)
@@ -131,6 +132,8 @@ document.addEventListener(`DOMContentLoaded`, e => {
             }
         }else if(e.target.matches("#logoutBtn")){
             localStorage.clear()
+            const savedStyleContainer = document.querySelector("#saved-style-container")
+            savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
             const createUserForm = document.querySelector("#create-account")
             createUserForm.style.display = "none"
             const createdUserName = document.querySelector('#created-user')
@@ -221,6 +224,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
 
                     localStorage['username'] = `${response.username}`
                     
+                    
                     successModal.addEventListener("click", e => {
                         if(e.target.matches(".close")){
                             successModal.style.display = "none"
@@ -236,6 +240,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
     })
     
     function checkLogin(){
+        
         if(localStorage['username']){
             const createUserForm = document.querySelector("#create-account")
             const createdUserName = document.querySelector('#created-user')
@@ -251,6 +256,17 @@ document.addEventListener(`DOMContentLoaded`, e => {
             loginBtn.style.display = "none"
             signUpbtn.style.display = "none"
             loginForm.style.display = "none"
+            id = localStorage['user_id']
+            
+            fetch(`http://localhost:3000/users/username/${localStorage['username']}`)
+            .then(res => res.json())
+            .then(user => {
+                localStorage['username'] = user.user.username
+                localStorage['user_id'] = user.user.id
+                const savedStyleContainer = document.querySelector("#saved-style-container")
+                savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
+                user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
+            })
             
         }
 
@@ -259,10 +275,13 @@ document.addEventListener(`DOMContentLoaded`, e => {
     function login(username){
         fetch(`http://localhost:3000/users/username/${username}`)
         .then(res => res.json())
-        .then(username => {
-            localStorage['username'] = username.username
+        .then(user => {
+            localStorage['username'] = user.user.username
+            localStorage['user_id'] = user.user.id
             checkLogin()
-            //Styles()
+            const savedStyleContainer = document.querySelector("#saved-style-container")
+            savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
+            user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
         })
         
     }
