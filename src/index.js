@@ -160,7 +160,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             const form = document.querySelector(`#style-form`)
             const name = form.name.value
             const css = form.css.value
-            const id = 1//document.querySelector(`#custom`).dataset.id
+            const id = 4//document.querySelector(`#custom`).dataset.id
             const style = {
                 id: id,
                 name: name,
@@ -178,6 +178,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             })
             .then(r => r.json())
             .then(data => {
+                console.log(data)
                 //remove styles
                 //re render styles
             })
@@ -216,7 +217,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             convertStyle(styleObject)
         }
 
-        if (e.target.matches(`#save-button`)) {
+        if (e.target.matches(`#style-form`)) {
             console.log(``)
             const object = {
                 user_id: id,
@@ -232,7 +233,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 body: JSON.stringify(object)
             })
             .then(r => r.json())
-            .then(styleData => renderStyle(styleData))
+            .then(styleData => {renderStyle(styleData);console.log(styleData)})
         } 
 
         if (e.target.matches('#create-account')){
@@ -306,13 +307,18 @@ document.addEventListener(`DOMContentLoaded`, e => {
             .then(user => {
                 localStorage['username'] = user.user.username
                 localStorage['user_id'] = user.user.id
-                const savedStyleContainer = document.querySelector("#saved-style-container")
-                savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
-                user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
+                console.log(user)
+                renderUserStyles(user)
             })
             
         }
 
+    }
+
+    const renderUserStyles = user => {
+        const savedStyleContainer = document.querySelector("#saved-style-container")
+        savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
+        user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
     }
 
     function login(username){
