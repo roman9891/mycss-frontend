@@ -20,7 +20,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             height: "300px",
             width: "300px",
             "border-style": "solid",
-            "border-width": "30px",
+            "border-width": "1px",
             "border-radius": "0px",
             position: "absolute",
             // top:"0",
@@ -156,10 +156,51 @@ document.addEventListener(`DOMContentLoaded`, e => {
             const signUpbtn = document.querySelector("#sign-up")
             signUpbtn.style.display = "none"
         }
+        if (e.target.matches('#edit-button')){
+            const form = document.querySelector(`#style-form`)
+            const name = form.name.value
+            const css = form.css.value
+            const id = 1//document.querySelector(`#custom`).dataset.id
+            const style = {
+                id: id,
+                name: name,
+                properties: css
+            }
+            console.log(id)
+            
+            fetch(`http://localhost:3000/styles/${id}`, {
+                method: `PATCH`,
+                headers: {
+                    "content-type": `application/json`,
+                    accept: `application/json`
+                },
+                body: JSON.stringify(style)
+            })
+            .then(r => r.json())
+            .then(data => {
+                //remove styles
+                //re render styles
+            })
+        }
+
+        if (e.target.matches('#delete-button')){
+            const id = 3//document.querySelector(`#custom`).dataset.id
+
+            fetch(`http://localhost:3000/styles/${id}`, {
+                method: `DELETE`,
+                headers: {"content-type": `application/json`}
+            })
+            .then(r => console.log(r))
+            .then(data => {
+                //rerender
+            })
+            console.log(``)
+        }
     })
 
     document.addEventListener(`submit`, e => {
         e.preventDefault()
+        console.log(e.target)
         if (e.target.matches(`#border-color`)) {        
             styleObject['border-color'] = e.target.color.value
             convertStyle(styleObject)
@@ -175,7 +216,8 @@ document.addEventListener(`DOMContentLoaded`, e => {
             convertStyle(styleObject)
         }
 
-        if (e.target.matches(`#style-form`)) {
+        if (e.target.matches(`#save-button`)) {
+            console.log(``)
             const object = {
                 user_id: id,
                 name: e.target.name.value,
@@ -192,6 +234,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             .then(r => r.json())
             .then(styleData => renderStyle(styleData))
         } 
+
         if (e.target.matches('#create-account')){
             const CreateUserObj = {
                 username: e.target[0].value, 
