@@ -2,6 +2,7 @@
 
 document.addEventListener(`DOMContentLoaded`, e => {
     let id = 1
+    let styleId = 0
     const styleTag = document.querySelector(`#style`)
     const defaultStyle = document.querySelector("style")
     const customDiv = document.querySelector(`#custom`)
@@ -22,7 +23,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
         savedStyleDiv.style.border = "1px solid black"
     }
 
-    const styleObject = {
+    let styleObject = {
         
             height: "300px",
             width: "300px",
@@ -36,6 +37,17 @@ document.addEventListener(`DOMContentLoaded`, e => {
             // right: "0",
             margin: "0",
             padding: "0"
+    }
+    const defaultStyleObject = styleObject
+
+    const convertStyleObject = (styleObject) => {
+        const newObject = {}
+        const x = styleObject.split(` `).join(``).slice(1,-1).split(`;`)
+        x.forEach(keyValue => {
+            let y = keyValue.split(`:`)
+            newObject[y[0]] = y[1]
+        })
+        return newObject
     }
 
     document.addEventListener(`change`, e => {
@@ -145,6 +157,10 @@ document.addEventListener(`DOMContentLoaded`, e => {
             createUserForm.style.display = "none"
             const createdUserName = document.querySelector('#created-user')
             createdUserName.style.display = "none"
+            const editAndDeleteButtons = document.querySelectorAll(`.saved-style-buttons`)
+            editAndDeleteButtons.forEach(button => button.style.display = `none`)
+            styleObject = defaultStyleObject
+            convertStyle(styleObject)
             loginSignupOn()
 
         }else if(e.target.matches("#log-in")){
@@ -164,20 +180,25 @@ document.addEventListener(`DOMContentLoaded`, e => {
             signUpbtn.style.display = "none"
         }else if(e.target.matches("#saved-style-container > span")){
             defaultStyle.innerHTML = `.custom${e.target.dataset.properties}`
+            styleObject = convertStyleObject(e.target.dataset.properties)
+            convertStyle(styleObject)
+            styleId = e.target.dataset.id
+            const editAndDeleteButtons = document.querySelectorAll(`.saved-style-buttons`)
+            editAndDeleteButtons.forEach(button => button.style.display = `inline`)
+            console.log(editAndDeleteButtons)
         }
         if (e.target.matches('#edit-button')){
             const form = document.querySelector(`#style-form`)
             const name = form.name.value
             const css = form.css.value
-            const id = 4//document.querySelector(`#custom`).dataset.id
             const style = {
-                id: id,
+                id: styleId,
                 name: name,
                 properties: css
             }
             console.log(id)
             
-            fetch(`http://localhost:3000/styles/${id}`, {
+            fetch(`http://localhost:3000/styles/${styleId}`, {
                 method: `PATCH`,
                 headers: {
                     "content-type": `application/json`,
@@ -194,9 +215,9 @@ document.addEventListener(`DOMContentLoaded`, e => {
         }
 
         if (e.target.matches('#delete-button')){
-            const id = 3//document.querySelector(`#custom`).dataset.id
+            const id = document.querySelector(`#custom`).dataset.id
 
-            fetch(`http://localhost:3000/styles/${id}`, {
+            fetch(`http://localhost:3000/styles/${styleId}`, {
                 method: `DELETE`,
                 headers: {"content-type": `application/json`}
             })

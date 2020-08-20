@@ -159,3 +159,7 @@ form {
     /* align-self: center; */
 }
 
+.saved-style-buttons {
+    display: none;
+}
+
