@@ -186,6 +186,8 @@ document.addEventListener(`DOMContentLoaded`, e => {
             const editAndDeleteButtons = document.querySelectorAll(`.saved-style-buttons`)
             editAndDeleteButtons.forEach(button => button.style.display = `inline`)
             console.log(editAndDeleteButtons)
+            const styleName = document.querySelector("#style-name-input")
+            styleName.value = e.target.dataset.name
         }
         if (e.target.matches('#edit-button')){
             const form = document.querySelector(`#style-form`)
@@ -227,6 +229,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             })
             console.log(``)
         }
+        
     })
 
     document.addEventListener(`submit`, e => {
@@ -311,6 +314,10 @@ document.addEventListener(`DOMContentLoaded`, e => {
         if(e.target.matches("#login-account")){
             login(e.target[0].value)
         }
+        if(e.target.matches('#google-font-selection')){
+            applyFont(e.target[0].value) 
+           
+        }
     })
     
    
@@ -367,6 +374,23 @@ document.addEventListener(`DOMContentLoaded`, e => {
         
     }
     
+    function applyFont(fontName){
+        const head = document.querySelector("head")
+        head.insertAdjacentHTML('afterbegin',`<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=${fontName}">`)
+        styleObject['font-family'] = `${fontName}`
+        convertStyle(styleObject)
+    }
+
+    function getFontsList(){
+        fetch("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCNrAtKTQ6o1tG2YLdGMcz_A5tDfRycRKc")
+        .then(response => response.json())
+        .then(fonts => {
+            fonts.items.forEach(font => {
+                const fontFamList = document.querySelector("#font-families")
+                fontFamList.innerHTML += `<option value="${font.family}">`
+            })
+        })
+    }
     
 
     const convertStyle = (styleObject) => {
@@ -397,7 +421,8 @@ document.addEventListener(`DOMContentLoaded`, e => {
         const signUpbtn = document.querySelector("#sign-up")
             signUpbtn.style.display = "none"
     }
-
+    
+    getFontsList()
     convertStyle(styleObject)
     checkLogin()
     
