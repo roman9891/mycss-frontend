@@ -326,8 +326,9 @@ document.addEventListener(`DOMContentLoaded`, e => {
                     successModalContent.textContent = `Congrats! the account for ${response.username}, has been created successfully`
                     successModal.style.display = "block"
                     createUserForm.style.display = "none"
-                    createdUserName.innerText = `Welcome ${response.username}`
+                    createdUserName.innerText = `     Welcome ${response.username}`
                     createdUserName.insertAdjacentHTML('afterbegin',logoutBtn)
+                    createdUserName.style.display = "block"
 
                     localStorage['username'] = `${response.username}`
                     
@@ -366,6 +367,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             createUserForm.style.display = "none"
             createdUserName.innerText = `     Hi ${localStorage['username']}!`
             createdUserName.insertAdjacentHTML('afterbegin',logoutBtn)
+            createdUserName.style.display = "block"
             loginBtn.style.display = "none"
             signUpbtn.style.display = "none"
             loginForm.style.display = "none"
