@@ -5,15 +5,17 @@ document.addEventListener(`DOMContentLoaded`, e => {
     let styleId = 0
     const defaultStyle = document.querySelector("style")
     const styleForm = document.querySelector(`#style-form`)
+    
     const renderStyle = styleData => {
         const savedStyleContainer = document.querySelector(`#saved-style-container`)
         const savedStyleDiv = document.createElement(`span`)
+        const previewProperties = convertStyleObject(styleData.properties)
+        
         savedStyleDiv.classList.add(`saved-style-div`)
         savedStyleDiv.dataset.id = styleData.id
         savedStyleDiv.dataset.name = styleData.name
         savedStyleDiv.dataset.properties = styleData.properties
         savedStyleDiv.dataset.user_id = styleData.user_id
-        const previewProperties = convertStyleObject(styleData.properties)
         savedStyleDiv.innerText = !!styleData.name ? styleData.name : `#${styleData.id}`
         savedStyleContainer.append(savedStyleDiv)
         savedStyleDiv.style.border = "3px solid black"
@@ -33,13 +35,14 @@ document.addEventListener(`DOMContentLoaded`, e => {
             "border-color": "black",
             "color": "black",
             position: "absolute",
-            // top:"0",
-            // bottom: "0",
-            // left: "0",
-            // right: "0",
+            top:"0",
+            bottom: "0",
+            left: "0",
+            right: "0",
             margin: "0",
             padding: "0"
     }
+    
     const defaultStyleObject = styleObject
 
     const convertStyleObject = (styleObject) => {
@@ -51,6 +54,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
         })
         return newObject
     }
+    
     const fetchUser = username => {
         console.log(username, `http://localhost:3000/users/${username}`)
         fetch(`http://localhost:3000/users/username/${username}`)
@@ -58,104 +62,132 @@ document.addEventListener(`DOMContentLoaded`, e => {
         .then(userData => renderUserStyles(userData))
     }
 
+    const renderUserStyles = user => {
+        console.log(user)
+        const savedStyleContainer = document.querySelector("#saved-style-container")
+        savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
+        user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
+    }
+
+    const login = username => {
+        fetch(`http://localhost:3000/users/username/${username}`)
+        .then(res => res.json())
+        .then(user => {
+            localStorage['username'] = user.user.username
+            localStorage['user_id'] = user.user.id
+            checkLogin()
+            const savedStyleContainer = document.querySelector("#saved-style-container")
+            savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
+            user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
+        })
+        
+    }
+    
+    const applyFont = fontName => {
+        const head = document.querySelector("head")
+        head.insertAdjacentHTML('afterbegin',`<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=${fontName}">`)
+        styleObject['font-family'] = `${fontName}`
+        convertStyle(styleObject)
+    }
+
+    function getFontsList(){
+        fetch("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCNrAtKTQ6o1tG2YLdGMcz_A5tDfRycRKc")
+        .then(response => response.json())
+        .then(fonts => {
+            fonts.items.forEach(font => {
+                const fontFamList = document.querySelector("#font-families")
+                fontFamList.innerHTML += `<option value="${font.family}">`
+            })
+        })
+    }
+    
+
+    const convertStyle = (styleObject) => {
+        let bracketString = `{`
+        for(const key in styleObject) {
+            
+            bracketString +=
+            ` 
+            ${key}: ${styleObject[key]};
+            `
+        } 
+        bracketString += `}`
+        styleForm.css.innerText = bracketString
+        console.log(bracketString)
+        return defaultStyle.innerHTML = `.custom${bracketString}`
+    }
+    
+    const loginSignupOn = () => {
+        const loginBtn = document.querySelector("#log-in")
+            loginBtn.style.display = "block"
+        const signUpbtn = document.querySelector("#sign-up")
+            signUpbtn.style.display = "block"
+    }
+
+    const change = (parameter, value) => {
+        styleObject[parameter] = value
+        convertStyle(styleObject)
+    }
+
     document.addEventListener(`change`, e => {
         if (e.target.matches("#border-style")){
-            styleObject['border-style'] = e.target.value
-            convertStyle(styleObject)
+            change('border-style', e.target.value)
         }
         if (e.target.matches("#text-h-align")){
-            styleObject['text-align'] = e.target.value
-            convertStyle(styleObject)
+            change('text-align', e.target.value)
         }
-        // if (e.target.matches("#text-v-align")){
-        //     styleObject['vertical-align'] = e.target.value
-        //     convertStyle(styleObject)
-        // }
         if (e.target.matches("#position")){
-            styleObject['position'] = e.target.value
-            convertStyle(styleObject)
+            change('position', e.target.value)
         }
     })
 
-    document.addEventListener('click', e =>{
-        if(e.target.matches("#addDiv-up")){
-            const newCustomDiv = document.createElement(`div`)
-            const customDivContainer = document.querySelector(`#custom-container`)
-            newCustomDiv.classList.add(`custom`)
-            customDivContainer.append(newCustomDiv)
-            //console.log(customDivContainer)
+    const plus = (parameter, value) => {
+        styleObject[parameter] = `${parseInt(styleObject[parameter]) + value}px`
+        convertStyle(styleObject)
+    }
+    const minus = (parameter, value) => { 
+        if(parseInt(styleObject[parameter]) >= value ){
+            styleObject[parameter] = `${parseInt(styleObject[parameter]) - value}px`
+            convertStyle(styleObject)
+        }else if(parseInt(styleObject[parameter]) < value){
+            alert("poopy baby butt")
         }
-        if(e.target.matches("#addDiv-down")){
+    }
+    
 
-        }
+    document.addEventListener('click', e =>{
         if(e.target.matches("#border-width-up")){
-            styleObject['border-width'] = `${parseInt(styleObject['border-width']) + 5}px`
-            convertStyle(styleObject)
+            plus('border-width', 5)
         }else if(e.target.matches("#border-width-down")){
-            if(parseInt(styleObject['border-width']) > 5 ){
-                styleObject['border-width'] = `${parseInt(styleObject['border-width']) - 5}px`
-                convertStyle(styleObject)
-            }else if(parseInt(styleObject['border-width']) <= 5){
-                alert("It's too small b")
-            }
+            minus('border-width', 5)
         }else if(e.target.matches("#border-radius-up")){
-            styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) + 5}%`
-            convertStyle(styleObject)
+            plus('border-radius', 5)
         }else if(e.target.matches("#border-radius-down")){
-            if (parseInt(styleObject['border-radius']) >= 5 ){
-                styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) - 5}%`
-                convertStyle(styleObject)
-            } else if (parseInt(styleObject['border-radius']) <= 5){
-                alert("It's too small b")
-            }
+            minus('border-radius', 5)
         }else if(e.target.matches("#padding-width-up")){
-            styleObject['padding'] = `${parseInt(styleObject['padding']) + 5}px`
-            convertStyle(styleObject)
+            plus('padding', 5)
         }else if(e.target.matches("#padding-width-down")){
-            if (parseInt(styleObject['padding']) > 0 ){
-                styleObject['padding'] = `${parseInt(styleObject['padding']) - 5}px`
-                convertStyle(styleObject)
-            }
+            minus('padding', 5)
         }else if(e.target.matches("#height-up")){
-            styleObject['height'] = `${parseInt(styleObject['height']) + 5}px`
-            convertStyle(styleObject)
+            plus('height', 5)
         }else if(e.target.matches("#height-down")){
-            if (parseInt(styleObject['height']) > 0 ){
-                styleObject['height'] = `${parseInt(styleObject['height']) - 5}px`
-                convertStyle(styleObject)
-            }
+            minus('height', 5)
         }else if(e.target.matches("#width-up")){
-            styleObject['width'] = `${parseInt(styleObject['width']) + 5}px`
-            convertStyle(styleObject)
+            plus('width', 5)
         }else if(e.target.matches("#width-down")){
-            if (parseInt(styleObject['width']) > 0 ){
-                styleObject['width'] = `${parseInt(styleObject['width']) - 5}px`
-                convertStyle(styleObject)
-            }
+            minus('width', 5)
         }else if(e.target.matches("#top-up")){
-            styleObject['top'] = `${parseInt(styleObject['top']) + 1}px`
-            convertStyle(styleObject)
+            plus('top', 5)
         }else if(e.target.matches("#top-down")){
-            if (parseInt(styleObject['top']) > 0 ){
-                styleObject['top'] = `${parseInt(styleObject['top']) - 1}px`
-                convertStyle(styleObject)
-            }
+            minus('top', 5)
         }else if(e.target.matches("#left-up")){
-            styleObject['left'] = `${parseInt(styleObject['left']) + 1}px`
-            convertStyle(styleObject)
+            plus('left', 5)
         }else if(e.target.matches("#left-down")){
-            if (parseInt(styleObject['left']) > 0 ){
-                styleObject['left'] = `${parseInt(styleObject['left']) - 1}px`
-                convertStyle(styleObject)
-            }
+            minus('left', 5)
         }else if(e.target.matches("#margin-width-up")){
-                styleObject['margin'] = `${parseInt(styleObject['margin']) + 1}px`
-                convertStyle(styleObject)
-            } else if(e.target.matches("#margin-width-down")){
-                if (parseInt(styleObject['margin']) > 0 ){
-                styleObject['margin'] = `${parseInt(styleObject['margin']) - 1}px`
-                convertStyle(styleObject)
-            }
+            plus('margin', 5)
+        } else if(e.target.matches("#margin-width-down")){
+            minus('margin', 5)
         }else if(e.target.matches("#logoutBtn")){
             localStorage.clear()
             const savedStyleContainer = document.querySelector("#saved-style-container")
@@ -316,7 +348,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
     
    
 
-    function checkLogin(){
+    const checkLogin = () => {
         
         if(localStorage['username']){
             const createUserForm = document.querySelector("#create-account")
@@ -342,83 +374,32 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 localStorage['user_id'] = user.user.id
                 console.log(user)
                 renderUserStyles(user)
-            })
-            
+            })  
         }
-
     }
 
-    const renderUserStyles = user => {
-        console.log(user)
-        const savedStyleContainer = document.querySelector("#saved-style-container")
-        savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
-        user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
-    }
-
-    function login(username){
-        fetch(`http://localhost:3000/users/username/${username}`)
-        .then(res => res.json())
-        .then(user => {
-            localStorage['username'] = user.user.username
-            localStorage['user_id'] = user.user.id
-            checkLogin()
-            const savedStyleContainer = document.querySelector("#saved-style-container")
-            savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
-            user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
-        })
-        
-    }
-    
-    function applyFont(fontName){
-        const head = document.querySelector("head")
-        head.insertAdjacentHTML('afterbegin',`<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=${fontName}">`)
-        styleObject['font-family'] = `${fontName}`
-        convertStyle(styleObject)
-    }
-
-    function getFontsList(){
-        fetch("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCNrAtKTQ6o1tG2YLdGMcz_A5tDfRycRKc")
-        .then(response => response.json())
-        .then(fonts => {
-            fonts.items.forEach(font => {
-                const fontFamList = document.querySelector("#font-families")
-                fontFamList.innerHTML += `<option value="${font.family}">`
-            })
-        })
-    }
-    
-
-    const convertStyle = (styleObject) => {
-        let bracketString = `{`
-        for(const key in styleObject) {
-            
-            bracketString +=
-            ` 
-            ${key}: ${styleObject[key]};
-            `
-        } 
-        bracketString += `}`
-        styleForm.css.innerText = bracketString
-        console.log(bracketString)
-        return defaultStyle.innerHTML = `.custom${bracketString}`
-    }
-    
-    function loginSignupOn(){
-        const loginBtn = document.querySelector("#log-in")
-            loginBtn.style.display = "block"
-        const signUpbtn = document.querySelector("#sign-up")
-            signUpbtn.style.display = "block"
-    }
-
-    function loginSignupoff(){
-        const loginBtn = document.querySelector("#log-in")
-            loginBtn.style.display = "none"
-        const signUpbtn = document.querySelector("#sign-up")
-            signUpbtn.style.display = "none"
-    }
-    
+ 
     getFontsList()
     convertStyle(styleObject)
     checkLogin()
     
 });
+
+  // function loginSignupoff(){
+    //     const loginBtn = document.querySelector("#log-in")
+    //         loginBtn.style.display = "none"
+    //     const signUpbtn = document.querySelector("#sign-up")
+    //         signUpbtn.style.display = "none"
+    // }
+
+    // in click
+    // if(e.target.matches("#addDiv-up")){
+    //     const newCustomDiv = document.createElement(`div`)
+    //     const customDivContainer = document.querySelector(`#custom-container`)
+        
+    //     newCustomDiv.classList.add(`custom`)
+    //     customDivContainer.append(newCustomDiv)
+    // }
+    // if(e.target.matches("#addDiv-down")){
+
+    // }
