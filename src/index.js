@@ -75,10 +75,10 @@ document.addEventListener(`DOMContentLoaded`, e => {
         .then(user => {
             localStorage['username'] = user.user.username
             localStorage['user_id'] = user.user.id
-            checkLogin()
             const savedStyleContainer = document.querySelector("#saved-style-container")
             savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
             user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
+            checkLogin()
         })
         
     }
