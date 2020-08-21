@@ -229,6 +229,26 @@ document.addEventListener(`DOMContentLoaded`, e => {
             const styleName = document.querySelector("#style-name-input")
             styleName.value = e.target.dataset.name
         }
+        if(e.target.matches("#save-button")){
+            const form = document.querySelector("#style-form")
+
+            const object = {
+                user_id: id,
+                name: form.name.value,
+                properties: form.css.value
+            }
+            fetch(`http://localhost:3000/styles`, {
+                method: `POST`,
+                headers: {
+                    "content-type": `application/json`,
+                    accept: `application/json`
+                },
+                body: JSON.stringify(object)
+            })
+            .then(r => r.json())
+            .then(styleData => {renderStyle(styleData);console.log(styleData)})
+        } 
+
         if (e.target.matches('#edit-button')){
             const form = document.querySelector(`#style-form`)
             const name = form.name.value
@@ -278,25 +298,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             convertStyle(styleObject)
         }
 
-        if (e.target.matches(`#style-form`)) {
-            console.log(``)
-            const object = {
-                user_id: id,
-                name: e.target.name.value,
-                properties: e.target.css.value
-            }
-            fetch(`http://localhost:3000/styles`, {
-                method: `POST`,
-                headers: {
-                    "content-type": `application/json`,
-                    accept: `application/json`
-                },
-                body: JSON.stringify(object)
-            })
-            .then(r => r.json())
-            .then(styleData => {renderStyle(styleData);console.log(styleData)})
-        } 
-
+        
         if (e.target.matches('#create-account')){
             const CreateUserObj = {
                 username: e.target[0].value, 
