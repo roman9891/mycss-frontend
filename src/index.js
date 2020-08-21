@@ -34,7 +34,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             "background-color": "white",
             "border-color": "black",
             "color": "black",
-            position: "absolute",
+            position: "relative",
             top:"0",
             bottom: "0",
             left: "0",
@@ -209,6 +209,8 @@ document.addEventListener(`DOMContentLoaded`, e => {
             loginBtn.style.display = "none"
             const signUpbtn = document.querySelector("#sign-up")
             signUpbtn.style.display = "none"
+            
+            checkLogin()
         
         }else if(e.target.matches("#sign-up")){
             const createUserForm = document.querySelector("#create-account")
@@ -349,7 +351,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
    
 
     const checkLogin = () => {
-        
+        console.log('poopybabyman')
         if(localStorage['username']){
             const createUserForm = document.querySelector("#create-account")
             const createdUserName = document.querySelector('#created-user')
@@ -360,7 +362,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             logoutDiv.setAttribute('id', 'logout')
             const logoutBtn = logoutDiv.innerHTML = `<button id="logoutBtn">Logout</button>`
             createUserForm.style.display = "none"
-            createdUserName.innerText = `Hi ${localStorage['username']}!`
+            createdUserName.innerText = `     Hi ${localStorage['username']}!`
             createdUserName.insertAdjacentHTML('afterbegin',logoutBtn)
             loginBtn.style.display = "none"
             signUpbtn.style.display = "none"
