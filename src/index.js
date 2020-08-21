@@ -12,6 +12,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
         savedStyleDiv.dataset.id = styleData.id
         savedStyleDiv.dataset.name = styleData.name
         savedStyleDiv.dataset.properties = styleData.properties
+        savedStyleDiv.dataset.user_id = styleData.user_id
         const previewProperties = convertStyleObject(styleData.properties)
         savedStyleDiv.innerText = !!styleData.name ? styleData.name : `#${styleData.id}`
         savedStyleContainer.append(savedStyleDiv)
@@ -50,6 +51,12 @@ document.addEventListener(`DOMContentLoaded`, e => {
         })
         return newObject
     }
+    const fetchUser = username => {
+        console.log(username, `http://localhost:3000/users/${username}`)
+        fetch(`http://localhost:3000/users/username/${username}`)
+        .then(r => r.json())
+        .then(userData => renderUserStyles(userData))
+    }
 
     document.addEventListener(`change`, e => {
         if (e.target.matches("#border-style")){
@@ -76,7 +83,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             const customDivContainer = document.querySelector(`#custom-container`)
             newCustomDiv.classList.add(`custom`)
             customDivContainer.append(newCustomDiv)
-            console.log(customDivContainer)
+            //console.log(customDivContainer)
         }
         if(e.target.matches("#addDiv-down")){
 
@@ -95,7 +102,6 @@ document.addEventListener(`DOMContentLoaded`, e => {
             styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) + 5}%`
             convertStyle(styleObject)
         }else if(e.target.matches("#border-radius-down")){
-            console.log(e.target)
             if (parseInt(styleObject['border-radius']) >= 5 ){
                 styleObject['border-radius'] = `${parseInt(styleObject['border-radius']) - 5}%`
                 convertStyle(styleObject)
@@ -186,7 +192,6 @@ document.addEventListener(`DOMContentLoaded`, e => {
             styleId = e.target.dataset.id
             const editAndDeleteButtons = document.querySelectorAll(`.saved-style-buttons`)
             editAndDeleteButtons.forEach(button => button.style.display = `inline`)
-            console.log(editAndDeleteButtons)
             const styleName = document.querySelector("#style-name-input")
             styleName.value = e.target.dataset.name
         }
@@ -199,8 +204,6 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 name: name,
                 properties: css
             }
-            console.log(id)
-            
             fetch(`http://localhost:3000/styles/${styleId}`, {
                 method: `PATCH`,
                 headers: {
@@ -210,25 +213,15 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 body: JSON.stringify(style)
             })
             .then(r => r.json())
-            .then(data => {
-                console.log(data)
-                //remove styles
-                //re render styles
-            })
+            .then(setTimeout(() => {fetchUser(localStorage[`username`])}, 500))
         }
 
         if (e.target.matches('#delete-button')){
-            const id = document.querySelector(`#custom`).dataset.id
-
             fetch(`http://localhost:3000/styles/${styleId}`, {
                 method: `DELETE`,
                 headers: {"content-type": `application/json`}
             })
-            .then(r => console.log(r))
-            .then(data => {
-                //rerender
-            })
-            console.log(``)
+            .then(setTimeout(() => {fetchUser(localStorage[`username`])}, 500))
         }
         
     })
@@ -356,6 +349,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
     }
 
     const renderUserStyles = user => {
+        console.log(user)
         const savedStyleContainer = document.querySelector("#saved-style-container")
         savedStyleContainer.querySelectorAll("span").forEach(childPoop => childPoop.remove())
         user.styles.forEach(poopyStyle => renderStyle(poopyStyle))
