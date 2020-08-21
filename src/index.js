@@ -3,11 +3,8 @@
 document.addEventListener(`DOMContentLoaded`, e => {
     let id = 1
     let styleId = 0
-    const styleTag = document.querySelector(`#style`)
     const defaultStyle = document.querySelector("style")
-    const customDiv = document.querySelector(`#custom`)
     const styleForm = document.querySelector(`#style-form`)
-    const aTag = document.createElement("a")
     const renderStyle = styleData => {
         const savedStyleContainer = document.querySelector(`#saved-style-container`)
         const savedStyleDiv = document.createElement(`span`)
@@ -15,12 +12,13 @@ document.addEventListener(`DOMContentLoaded`, e => {
         savedStyleDiv.dataset.id = styleData.id
         savedStyleDiv.dataset.name = styleData.name
         savedStyleDiv.dataset.properties = styleData.properties
-        savedStyleDiv.innerText = styleData.name
+        const previewProperties = convertStyleObject(styleData.properties)
+        savedStyleDiv.innerText = !!styleData.name ? styleData.name : `#${styleData.id}`
         savedStyleContainer.append(savedStyleDiv)
-        savedStyleDiv.style.cursor = "pointer";
-        savedStyleDiv.style.color =  "blue"
-        savedStyleDiv.style.background = "white"
-        savedStyleDiv.style.border = "1px solid black"
+        savedStyleDiv.style.border = "3px solid black"
+        savedStyleDiv.style["background-color"] = previewProperties["background-color"]
+        savedStyleDiv.style["color"] = previewProperties["color"]
+        savedStyleDiv.style["border-color"] = previewProperties["border-color"]
     }
 
     let styleObject = {
@@ -30,6 +28,9 @@ document.addEventListener(`DOMContentLoaded`, e => {
             "border-style": "solid",
             "border-width": "1px",
             "border-radius": "0px",
+            "background-color": "white",
+            "border-color": "black",
+            "color": "black",
             position: "absolute",
             // top:"0",
             // bottom: "0",
