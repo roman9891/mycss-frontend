@@ -71,16 +71,16 @@ document.addEventListener(`DOMContentLoaded`, e => {
     })
 
     document.addEventListener('click', e =>{
-        if(e.target.matches("#addDiv-up")){
-            const newCustomDiv = document.createElement(`div`)
-            const customDivContainer = document.querySelector(`#custom-container`)
-            newCustomDiv.classList.add(`custom`)
-            customDivContainer.append(newCustomDiv)
-            console.log(customDivContainer)
-        }
-        if(e.target.matches("#addDiv-down")){
+        // if(e.target.matches("#addDiv-up")){
+        //     const newCustomDiv = document.createElement(`div`)
+        //     const customDivContainer = document.querySelector(`#custom-container`)
+        //     newCustomDiv.classList.add(`custom`)
+        //     customDivContainer.append(newCustomDiv)
+        //     console.log(customDivContainer)
+        // }
+        // if(e.target.matches("#addDiv-down")){
 
-        }
+        // }
         if(e.target.matches("#border-width-up")){
             styleObject['border-width'] = `${parseInt(styleObject['border-width']) + 5}px`
             convertStyle(styleObject)
@@ -335,7 +335,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             logoutDiv.setAttribute('id', 'logout')
             const logoutBtn = logoutDiv.innerHTML = `<button id="logoutBtn">Logout</button>`
             createUserForm.style.display = "none"
-            createdUserName.innerText = `Hi ${localStorage['username']}!`
+            createdUserName.innerText = `     Hi ${localStorage['username']}!`
             createdUserName.insertAdjacentHTML('afterbegin',logoutBtn)
             loginBtn.style.display = "none"
             signUpbtn.style.display = "none"
