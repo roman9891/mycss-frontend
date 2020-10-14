@@ -56,8 +56,8 @@ document.addEventListener(`DOMContentLoaded`, e => {
     }
     
     const fetchUser = username => {
-        console.log(username, `http://localhost:3000/users/${username}`)
-        fetch(`http://localhost:3000/users/username/${username}`)
+        console.log(username, `https://my-css-backend.herokuapp.com/users/${username}`)
+        fetch(`https://my-css-backend.herokuapp.com/users/username/${username}`)
         .then(r => r.json())
         .then(userData => renderUserStyles(userData))
     }
@@ -70,7 +70,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
     }
 
     const login = username => {
-        fetch(`http://localhost:3000/users/username/${username}`)
+        fetch(`https://my-css-backend.herokuapp.com/users/username/${username}`)
         .then(res => res.json())
         .then(user => {
             localStorage['username'] = user.user.username
@@ -238,7 +238,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 name: form.name.value,
                 properties: form.css.value
             }
-            fetch(`http://localhost:3000/styles`, {
+            fetch(`https://my-css-backend.herokuapp.com/styles`, {
                 method: `POST`,
                 headers: {
                     "content-type": `application/json`,
@@ -259,7 +259,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 name: name,
                 properties: css
             }
-            fetch(`http://localhost:3000/styles/${styleId}`, {
+            fetch(`https://my-css-backend.herokuapp.com/styles/${styleId}`, {
                 method: `PATCH`,
                 headers: {
                     "content-type": `application/json`,
@@ -272,7 +272,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
         }
 
         if (e.target.matches('#delete-button')){
-            fetch(`http://localhost:3000/styles/${styleId}`, {
+            fetch(`https://my-css-backend.herokuapp.com/styles/${styleId}`, {
                 method: `DELETE`,
                 headers: {"content-type": `application/json`}
             })
@@ -305,7 +305,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
                 username: e.target[0].value, 
                 password: e.target[1].value
             }
-            fetch('http://localhost:3000/users', {
+            fetch('https://my-css-backend.herokuapp.com/users', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
@@ -374,7 +374,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
             loginForm.style.display = "none"
             id = localStorage['user_id']
             
-            fetch(`http://localhost:3000/users/username/${localStorage['username']}`)
+            fetch(`https://my-css-backend.herokuapp.com/users/username/${localStorage['username']}`)
             .then(res => res.json())
             .then(user => {
                 localStorage['username'] = user.user.username
