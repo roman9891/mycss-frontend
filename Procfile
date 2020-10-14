@@ -1,0 +1,1 @@
+web: open src/index.js
