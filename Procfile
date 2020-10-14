@@ -1,1 +1,1 @@
-web: open src/index.js
+web: open index.html
