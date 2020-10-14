@@ -142,6 +142,7 @@ document.addEventListener(`DOMContentLoaded`, e => {
     })
 
     const plus = (parameter, value) => {
+        console.log(styleObject[parameter], parseInt(styleObject[parameter]),  `${parseInt(styleObject[parameter]) + value}px`)
         styleObject[parameter] = `${parseInt(styleObject[parameter]) + value}px`
         convertStyle(styleObject)
     }
